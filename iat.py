@@ -62,7 +62,7 @@ for sheet in input_wb.sheets():
 	for y in range(1, sheet.nrows):
 		row = Row(sheet.cell_value(y, 0), sheet.cell_value(y, 1), sheet.cell_value(y, 2))
 		all_rows.append(row)
-
+	f.write("###PAGE CLASS###\n")
 	f.write("class " + sheet.name.replace(" ", "") + "Page():\n")
 	for element in all_rows:
 		f.write("\t" + element.calc() + "\n")
@@ -86,19 +86,22 @@ for sheet in input_wb.sheets():
 	x = x.lower()
 	page_obj = x + "_page"
 	f.write("\n")
+	f.write("###FILL OUT FUNCTION###\n")
 	f.write("def " + x + "(browser):\n")
 	f.write("\t" + page_obj + " = pages_iedss." + sheet.name.replace(' ', '') + "Page(browser)\n")
 	f.write("\n")
 	for element in all_rows:
 		if element.prefix == "txt":
-			f.write("\tinteract.send_text(" + page_obj + "." + element.prefix + "_" + element.name + ", ***)\n")
+			f.write("\t#interact.send_text(" + page_obj + "." + element.prefix + "_" + element.name + ", ***)\n")
 			continue
 		if element.prefix == "btn" or element.prefix == "span":
-			f.write("\tinteract.click_element(" + page_obj + "." + element.prefix + "_" + element.name + ")\n")
+			f.write("\t#interact.click_element(" + page_obj + "." + element.prefix + "_" + element.name + ")\n")
 			continue
 		if element.prefix == "lb":
-			f.write("\tinteract.select_item_from_listbox(" + page_obj + "." + element.prefix + "_" + element.name + ", ***)\n")
+			f.write("\t#interact.select_item_from_listbox(" + page_obj + "." + element.prefix + "_" + element.name + ", ***)\n")
 			continue
-		f.write("\tinteract.***(" + page_obj + "." + element.prefix + "_" + element.name + ", ***)\n")
-
+		f.write("\t#interact.***(" + page_obj + "." + element.prefix + "_" + element.name + ", ***)\n")
+	f.write("\n")
+	f.write("###FUNCTION CALL###\n")
+	f.write("fill_out_iedss." + x + "(browser)\n\n\n")
 f.close()
