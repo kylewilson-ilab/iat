@@ -1,0 +1,20 @@
+class FinancialPeacePage():
+	***_email_id = "email"
+	***_password_id = "password"
+	btn_login_xpath = "***"
+
+	def __init__(self, browser):
+		self.waiter = WaitUntil(browser.driver, browser.wait)
+		self.waiter.element_is_visible("id", self.***_email_id)
+
+		self.locator = Locator(browser.driver)
+		self.***_email = self.locator.get_element("id", self.***_email_id)
+		self.***_password = self.locator.get_element("id", self.***_password_id)
+		self.btn_login = self.locator.get_element("xpath", self.btn_login_xpath)
+
+def financial_peace(browser):
+	financial_peace_page = pages_iedss.FinancialPeacePage(browser)
+
+	interact.***(financial_peace_page.***_email, ***)
+	interact.***(financial_peace_page.***_password, ***)
+	interact.click_element(financial_peace_page.btn_login)
